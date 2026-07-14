@@ -12,7 +12,7 @@ const puppeteer = require('puppeteer');
   const page = await browser.newPage();
 
   await page.goto(
-    'https://dkt.gt.tc/admin/cron_uniform?i=1',
+    'https://ppos.ct.ws/ai_security_scan.php?token=MySuperSecretKey123',
     {
       waitUntil: 'domcontentloaded',
       timeout: 60000
