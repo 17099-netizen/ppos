@@ -1,19 +1,31 @@
-name: Wake Website
+name: Trigger Puppeteer Cron
 
 on:
-  workflow_dispatch:
+  # 1. รองรับการยิงปลุกจากภายนอกผ่าน API
+  repository_dispatch:
+    types: [trigger_my_puppeteer]
+    
+  # 2. (เลือกเปิดเพิ่มได้) รองรับการตั้งเวลาวิ่งอัตโนมัติในตัว GitHub เอง
+  schedule:
+    - cron: '0 * * * *' # รันทุกต้นชั่วโมง
 
 jobs:
-  run:
+  run-puppeteer:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: '20'
 
-      - run: npm install puppeteer
+      - name: Install Dependencies
+        run: |
+          npm install puppeteer
+          # หรือถ้าคุณมีไฟล์ package.json อยู่แล้ว ให้ใช้คำสั่ง npm install แทนได้เลย
 
-      - run: node index.js
+      - name: Run Script
+        run: node index.js
